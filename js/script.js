@@ -14,9 +14,9 @@ $(document).ready(function() {
     var explosion; // will an explosion occur? 1 = yes, 0 = no
     var last_win = 0; // initialize variable that contains the win of the previous round
     var present_win = 0; //initialize variable of win in present around
-    var rounds_played = 2;
+    var rounds_played = 4;
     var exploded = []; // array for saving whether ballon has exploded
-    var explode_array = [15, 9/*, 16, 26, 22, 8, 27, 17, 23, 2, 8, 12, 6, 4*/];
+    var explode_array = [15, 9, 16, 26, 22, 8, 27, 17, 23, 2, 8, 12, 6, 4];
     var time_interval;
     var minute = 0,second = 0;
     var elapsed;
@@ -26,12 +26,13 @@ $(document).ready(function() {
     var number_explosion = 0;
     var number_pumps_no_exp = 0;
     var exploded_rounds = [];
+    var status_round = [];
     var not_exploded_rounds = [];
                           
     // initialize language
     var label_press = 'Inflate balloon';
     var label_collect = 'Collect';
-    var label_balance = 'Total credit:';
+    var label_balance = 'Total money:';
     var label_last = 'Win last round:';
     var label_currency = ' points';
     var label_times=' times';
@@ -51,6 +52,9 @@ $(document).ready(function() {
     var msg_end2 = ' points made profit. </ p> <p> Click <i> Next </ i> to continue the study. </ p>';
 
     $('#next').hide();
+    $('#results').hide();
+
+    //$('#bigwrap').hide();
     
     
     // initialize labels 
@@ -67,6 +71,19 @@ $(document).ready(function() {
     $('#outcomes').html(number_pumps);    
     
     // below: create functions that define game functionality
+
+    function msToTime(duration) {
+      var milliseconds = parseInt((duration % 1000) / 100),
+        seconds = parseInt((duration / 1000) % 60),
+        minutes = parseInt((duration / (1000 * 60)) % 60),
+        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+    
+      hours = (hours < 10) ? "0" + hours : hours;
+      minutes = (minutes < 10) ? "0" + minutes : minutes;
+      seconds = (seconds < 10) ? "0" + seconds : seconds;
+    
+      return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    }
       
       var start_timer = function(){
           if(round <= 9){
@@ -130,9 +147,39 @@ $(document).ready(function() {
       $('#results').show();
       $('#bigwrap').hide();
 
-      Qualtrics.SurveyEngine.setEmbeddedData('number_pumps',number_pumps);
+      $('#results').show();
+
+      $('#number_exp').html(number_explosion);
+      $('#number_nexp').html(number_pumps_no_exp);
+
+      var ms = 0;
+
+      for(var i = 0;i < total_elapsed_arr.length; i++){
+        ms += total_elapsed_arr[i];
+      } 
+
+      $('#total_time').html(msToTime(ms));
+
+      var ms2 = 0;
+      
+
+      for(var i = 0;i < time_between_pumps.length;i++){
+        for (var j = 0;j < time_between_pumps[i].length -1;j++){
+          ms2 += time_between_pumps[i][j];
+        }
+      }
+
+      $('#time_between_pumps').html(msToTime((ms2*1000)/(number_pumps_no_exp + number_explosion)));
+      $('#total_money').html('$ ' + total);
+
+      for(var i = 0;i < status_round.length; i++){
+        var lbl = '<label class="'+ (!status_round[i] ? 'balloon-x' : 'balloon-o') +'">'+ (!status_round[i] ? 'X [' + explode_array[i] +']'  : 'O') +'</label> ';
+        $('#sequence').append( lbl );        
+      }
+
+      /*Qualtrics.SurveyEngine.setEmbeddedData('number_pumps',number_pumps);
       Qualtrics.SurveyEngine.setEmbeddedData('exploded',exploded);
-      Qualtrics.SurveyEngine.setEmbeddedData('total_win',total);
+      Qualtrics.SurveyEngine.setEmbeddedData('total_win',total);*/
   
       
     };
@@ -161,12 +208,10 @@ $(document).ready(function() {
     var gonext_message = function() {
       $('#ballon').hide();
       if (round < rounds_played) {
-        $('#gonext').show();
-        $('#gonext_button').html(label_gonext1);
+        $('#gonext').html(label_gonext1).show();
       }
       else {
-        $('#gonext').show();
-        $('#gonext_button').html(label_gonext2);
+        $('#gonext').html(label_gonext2).show();
       }
     };
   
@@ -196,16 +241,16 @@ $(document).ready(function() {
         explosion = 0; // is set to one if pumping goes beyond explosion point; see below
         pumps += 1;
         present_win +=0.25;
-        if (pumps < explode_array[round-1]) {
-          if(!time_between_pumps[round-1]){
-            time_between_pumps[round-1] = [];
-          }
-          if(!elapsed){
-            elapsed = new Date();
-          }else{
-            time_between_pumps[round-1].push(Math.abs((new Date() - elapsed)/1000));			    
-            elapsed = new Date();
-          } 
+        if(!time_between_pumps[round-1]){
+          time_between_pumps[round-1] = [];
+        }
+        if(!elapsed){
+          elapsed = new Date();
+        }else{
+          time_between_pumps[round-1].push(Math.abs((new Date() - elapsed)/1000));			    
+          elapsed = new Date();
+        } 
+        if (pumps < explode_array[round-1]) {          
           if(round <= 10){
             number_pumps_no_exp++;
           }     
@@ -214,7 +259,6 @@ $(document).ready(function() {
           $('#ballon').height(size);
           show_present();
           show_present_earns();
-          not_exploded_rounds.push(round);
         }
         else {
       stop_timer();
@@ -226,7 +270,8 @@ $(document).ready(function() {
       if(round <= 10){
         number_explosion++;
       }
-      exploded_rounds.push(round);      
+      exploded_rounds.push(round); 
+      status_round.push(false);     
       balloon_explode();
       exploded.push(explosion); // save whether balloon has exploded or not      
       number_pumps.push(pumpmeup); // save number of pumps
@@ -245,6 +290,7 @@ $(document).ready(function() {
         }
         else if (pumps > 0) { // only works after at least one pump has been made
       elapsed = null;
+      status_round.push(true);
       stop_timer();
       not_exploded_rounds.push(round);
       time_between_pumps[round-1].push(Math.abs((new Date() - elapsed)/1000));
@@ -265,7 +311,7 @@ $(document).ready(function() {
     });
     
     // click this button to start the next round (or end game when all rounds are played)
-    $('#gonext_button').click(function() {
+    $('#gonext').click(function() {
       if (round < rounds_played) {
         minute = second = 0;	
         new_round();

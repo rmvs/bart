@@ -7,7 +7,6 @@
 <script language="javascript" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="js/script.js"></script>
 <style type="text/css">
@@ -95,10 +94,10 @@
   }
   #press, #collect, #goOn, #gonext {
    cursor: pointer;
-   /* background: #ddd; */
+   background: #ddd; 
   }
   #press:hover, #collect:hover, #goOn:hover, #gonext:hover {
-   /* background-color: #c2c2c2; */
+    background-color: #c2c2c2;
   }
   #gonext {
    font-size: 100%;
@@ -123,6 +122,29 @@
    right:5%;
    float:right;
 }
+
+.results {
+  padding: 1px;
+}
+
+ .result-table {
+   display: grid;
+   grid-template-columns: auto auto;
+   padding: 10px;
+ }
+ .result-item {
+   border: solid 1px rgba(0, 0, 0, 0.8);   
+   padding: 20px;
+ } 
+
+ .balloon-o {
+   font-weight: bold;
+ }
+ .balloon-x {
+   font-weight: bold;
+   color:red;
+ }
+
  </style>
 
 </head>
@@ -139,58 +161,81 @@
 
  <div id="ballonwrap">
   <div id="message"></div>
-  <div id="next"><button id="next_button" class="btn btn-success btn-lg">Next</button></div>
-  <div id="gonext"><div id="gonext_button" class="btn btn-dark"></div></div>
+  <div id="next"></div>
+  <div id="gonext"></div>
   <img src=https://erasmusuniversity.eu.qualtrics.com/ControlPanel/Graphic.php?IM=IM_e40vZ7nffgjMnul id="ballon" alt="Ballon">
  </div>
 
- <button type="button" class="btn btn-primary" id="press"></button>
- <button type="button" class="btn btn-primary" id="collect"></button>
+ <button type="button" id="press"></button>
+ <button type="button" id="collect"></button>
 
- <div class="card">
-   <div class="card-body">
-      <div id="present_round">
-          <div id="present_1">
+<div id="present_round">
+      <div id="present_1">
            <div id="present_value_term"></div>
            <div id="present_value"></div>
-          </div>
-          <div id="present_2">
-           <div id="present_times_term"></div>
-           <div id="present_times"></div>
-          </div>
-       </div>
+      </div>
+      <div id="present_2">
+          <div id="present_times_term"></div>
+          <div id="present_times"></div>
+      </div>
+</div>
       
-      <div id="last_round">
-        <div id="last_term"></div>
-        <div id="last_value"></div>
-      </div>
+<div id="last_round">
+  <div id="last_term"></div>
+  <div id="last_value"></div>
+</div>
 
-      <div id="total">
-        <div id="total_term"></div>
-        <div id="total_value"></div>
-      </div>
-   </div>
- </div> 
+<div id="total">
+  <div id="total_term"></div>
+  <div id="total_value"></div>
+</div> 
 
 </div>
 
-<!-- <div id="results" class="card">
-  <div class="card-header">
-    Resultados do Estudo
-  </div>
-  <div class="card-body">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-2">
-          Var1
-        </div>
-        <div class="col-sm-10">
-          Res1
-        </div>
+<div id="results">  
+    <div class="result-table">
+      <div class="result-item" style="grid-column-start: 1;grid-column-end: 3;text-align: center;">
+            Resultados
       </div>
+      <div class="result-item">
+            Quantidade de explosões
+      </div>
+      <div id="number_exp" class="result-item">
+
+      </div>
+      <div class="result-item">
+          Quantidade de bombeadas sem explodir
+     </div>
+     <div id="number_nexp" class="result-item">
+
+      </div>
+      <div class="result-item">
+        Tempo médio total do jogador:
+      </div>
+      <div id="total_time" class="result-item">
+
+      </div>
+      <div class="result-item">
+            Tempo médio entre uma bombeada e outra:
+      </div>
+      <div id="time_between_pumps" class="result-item">
+
+      </div>
+      <div class="result-item">
+          Total acumulado
+     </div>
+     <div id="total_money" class="result-item">
+
     </div>
-  </div>
-</div> -->
+    <div class="result-item" style="grid-column-start: 1;grid-column-end: 3">
+        Sequência de balões
+     </div>
+     <div class="result-item" id="sequence" style="grid-column-start: 1;grid-column-end: 3">  
+
+     </div>  
+    </div>
+  
+  </div> 
 
 </body>
 
