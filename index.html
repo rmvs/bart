@@ -15,7 +15,7 @@
    -moz-user-select: -moz-none;
    -ms-user-select: none;
    user-select: none;
-   width:100%;
+   width:100%;      
   }
   
   #NextButton {display:none;}
@@ -145,6 +145,29 @@
    color:red;
  }
 
+ .balloon-icon {
+        height: 2em;
+        width: 2em;
+        display: inline-table;
+        background-repeat: no-repeat;      
+        background-image: 
+        url("data:image/svg+xml;utf8,<svg  viewBox='-141 -21 682 682.66669'  xmlns='http://www.w3.org/2000/svg'><path d='m391.332031 199.5c0-110.003906-89.492187-199.5-199.496093-199.5-110.003907 0-199.503907 89.496094-199.503907 199.5 0 95.949219 68.09375 176.285156 158.484375 195.25l-52.574218 52.574219c-11.789063 11.785156-3.414063 32.007812 13.257812 32.007812h61.585938v29.84375c0 27.070313 17.25 51.011719 42.933593 59.570313.117188.039062.238281.078125.355469.117187 10.15625 3.539063 16.960938 13.09375 16.960938 23.875v28.511719c0 10.355469 8.390624 18.75 18.75 18.75 10.355468 0 18.75-8.394531 18.75-18.75v-28.511719c0-27.070312-17.257813-51.011719-42.941407-59.570312-.117187-.039063-.234375-.078125-.355469-.113281-10.15625-3.542969-16.953124-13.09375-16.953124-23.878907v-29.839843h61.582031c16.667969 0 25.042969-20.226563 13.257812-32.011719l-52.574219-52.574219c90.394532-18.964844 158.480469-99.300781 158.480469-195.25zm-234.566406 242.335938 35.070313-35.070313 35.0625 35.070313zm35.074219-80.335938c-.003906 0-.007813 0-.007813 0-89.328125 0-162-72.675781-162-162 0-89.328125 72.671875-162 162.003907-162 89.324218 0 161.996093 72.671875 161.996093 162s-72.671875 162-161.992187 162zm0 0'/><path d='m276.109375 115.230469c-22.507813-22.503907-52.429687-34.898438-84.253906-34.898438h-.019531c-10.355469 0-18.742188 8.394531-18.742188 18.75s8.40625 18.75 18.761719 18.75c21.8125 0 42.3125 8.492188 57.734375 23.910157 15.417968 15.421874 23.910156 35.921874 23.910156 57.753906 0 10.355468 8.394531 18.742187 18.75 18.742187s18.75-8.402343 18.75-18.761719c0-31.824218-12.390625-61.746093-34.890625-84.246093zm0 0'/></svg>");
+  }
+
+  .balloon-exploded::after {
+    content: "💥";
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+    color: red;
+
+  }
+  
+  /* .balloon-icon::after {
+    content: "X"
+  } */
+
+
  </style>
 
 </head>
@@ -157,9 +180,7 @@
 <div id="round"></div>
 
 <div id="bigwrap">
-
-
- <div id="ballonwrap">
+ <div id="ballonwrap">    
   <div id="message"></div>
   <div id="next"></div>
   <div id="gonext"></div>
@@ -201,6 +222,11 @@
             Quantidade de explosões
       </div>
       <div id="number_exp" class="result-item">
+      </div>
+      <div class="result-item">
+          Número médio de bombeadas
+     </div>
+     <div id="pump_times" class="result-item">
 
       </div>
       <div class="result-item">
@@ -230,8 +256,7 @@
     <div class="result-item" style="grid-column-start: 1;grid-column-end: 3">
         Sequência de balões
      </div>
-     <div class="result-item" id="sequence" style="grid-column-start: 1;grid-column-end: 3">  
-
+     <div class="result-item" id="sequence" style="grid-column-start: 1;grid-column-end: 3">
      </div>  
     </div>
   

@@ -28,6 +28,7 @@ $(document).ready(function() {
     var exploded_rounds = [];
     var status_round = [];
     var not_exploded_rounds = [];
+    var balloon_pumps = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                           
     // initialize language
     var label_press = 'Inflate balloon';
@@ -173,8 +174,9 @@ $(document).ready(function() {
       $('#total_money').html('$ ' + total);
 
       for(var i = 0;i < status_round.length; i++){
-        var lbl = '<label class="'+ (!status_round[i] ? 'balloon-x' : 'balloon-o') +'">'+ (!status_round[i] ? 'X [' + explode_array[i] +']'  : 'O') +'</label> ';
-        $('#sequence').append( lbl );        
+        // var lbl = '<label class="'+ (!status_round[i] ? 'balloon-x' : 'balloon-o') +'">'+ (!status_round[i] ? 'X [' + explode_array[i] +']'  : 'O') +'</label> ';
+        var div = '<div class="balloon-icon ' + (!status_round[i] ? 'balloon-exploded' : '') + '" onclick="alert(\'Bombeadas neste balão :\' + ' + balloon_pumps[i]  +')"></div>';
+        $('#sequence').append( div );        
       }
 
       /*Qualtrics.SurveyEngine.setEmbeddedData('number_pumps',number_pumps);
@@ -183,6 +185,10 @@ $(document).ready(function() {
   
       
     };
+
+    var show_qt = function(){
+      alert(1)
+    }
     
     // message shown if balloon explodes
     var explosion_message = function() {
@@ -249,7 +255,8 @@ $(document).ready(function() {
         }else{
           time_between_pumps[round-1].push(Math.abs((new Date() - elapsed)/1000));			    
           elapsed = new Date();
-        } 
+        }
+        balloon_pumps[round-1]++; 
         if (pumps < explode_array[round-1]) {          
           if(round <= 10){
             number_pumps_no_exp++;
