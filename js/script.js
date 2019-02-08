@@ -185,7 +185,7 @@ $(document).ready(function() {
       Qualtrics.SurveyEngine.setEmbeddedData('pumps_not_exploded',number_pumps_no_exp);
 
       Qualtrics.SurveyEngine.setEmbeddedData('total_time',ms);
-      Qualtrics.SurveyEngine.setEmbeddedData('total_money',total_credit);
+      Qualtrics.SurveyEngine.setEmbeddedData('total_money',total);
       Qualtrics.SurveyEngine.setEmbeddedData('number_explosion',number_explosion);
       Qualtrics.SurveyEngine.setEmbeddedData('ballons_exploded',JSON.stringify(exploded_rounds));
       Qualtrics.SurveyEngine.setEmbeddedData('balloons_not_exploded',JSON.stringify(not_exploded_rounds));
