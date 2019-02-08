@@ -179,6 +179,12 @@ $(document).ready(function() {
         $('#sequence').append( div );        
       }
 
+      /** QUALTRICS EMBED DATA */
+
+      // here
+
+      /** */
+
       /*Qualtrics.SurveyEngine.setEmbeddedData('number_pumps',number_pumps);
       Qualtrics.SurveyEngine.setEmbeddedData('exploded',exploded);
       Qualtrics.SurveyEngine.setEmbeddedData('total_win',total);*/
