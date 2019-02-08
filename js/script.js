@@ -29,7 +29,8 @@ $(document).ready(function() {
     var exploded_rounds = [];
     var status_round = [];
     var not_exploded_rounds = [];
-    var balloon_pumps = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var balloon_pumps = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];  
+
                           
     // initialize language
     var label_press = 'Inflate balloon';
@@ -189,6 +190,12 @@ $(document).ready(function() {
       Qualtrics.SurveyEngine.setEmbeddedData('number_explosion',number_explosion);
       Qualtrics.SurveyEngine.setEmbeddedData('ballons_exploded',JSON.stringify(exploded_rounds));
       Qualtrics.SurveyEngine.setEmbeddedData('balloons_not_exploded',JSON.stringify(not_exploded_rounds));
+
+      var temp = [];
+      $.each(time_between_pumps,function(index,el){
+        
+        JSON.stringify(el);
+      });
      
 
       Qualtrics.SurveyEngine.setEmbeddedData('time_between_pumps',JSON.stringify(time_between_pumps));
